@@ -82,10 +82,11 @@ exports.getAllSauces = (req, res) => {
 };
 
 exports.likeSauce = (req, res) => {
+    console.log(req.body);
     if (req.body.like == 1) {
         Sauce.findOne({ _id: req.params.id })
             .then(sauce => {
-                if (sauce.usersLiked.includes(req.body.userId)) {
+                if (sauce.usersLiked.includes(req.body.userId) || sauce.usersDisliked.includes(req.body.userId)) {
                     res.status(401).json({ message: "Non autorisé" });
                 } else {
                     Sauce.updateOne({ _id: req.params.id }, { $push: { usersLiked: req.body.userId }, $inc: { likes: 1 } })
@@ -112,7 +113,7 @@ exports.likeSauce = (req, res) => {
     } else {
         Sauce.findOne({ _id: req.params.id })
             .then(sauce => {
-                if (sauce.usersLiked.includes(req.body.userId)) {
+                if (sauce.usersLiked.includes(req.body.userId) || sauce.usersDisliked.includes(req.body.userId)) {
                     res.status(401).json({ message: "Non autorisé" });
                 } else {
                     Sauce.updateOne({ _id: req.params.id }, { $push: { usersDisliked: req.body.userId }, $inc: { dislikes: 1 } })
