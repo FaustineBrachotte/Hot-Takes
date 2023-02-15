@@ -12,15 +12,6 @@ passwordSchema
 .has().digits(2)                                // Must have at least 2 digits
 .has().not().spaces()
  
-/*module.exports = (req, res, next) => {
-    if (passwordSchema.validate(req.body.password)) {
-        next();
-    } else {
-        return (
-        res.status(400).json({ error: passwordSchema.validate(req.body.password, { details: true }) }));
-    }
-};*/
-
 module.exports = (req, res, next) => {
     if (passwordSchema.validate(req.body.password)) {
       next();
