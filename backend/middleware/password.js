@@ -18,10 +18,10 @@ module.exports = (req, res, next) => {
     } else {
       return (
         res.writeHead(
-          400, "Votre mot de passe doit contenir entre 8 et 16 caractères, au moins 2 chiffres, une majuscule, une minuscule et ne doit pas contenir d'espace"
+          400, "Votre mot de passe doit contenir entre 8 et 20 caractères, au moins 2 chiffres, une majuscule, une minuscule et ne doit pas contenir d'espace"
         ),
         res.end(
-          "Votre mot de passe doit contenir entre 8 et 16 caractères, au moins 2 chiffres, une majuscule, une minuscule et ne doit pas contenir d'espace"
+          "Votre mot de passe doit contenir entre 8 et 20 caractères, au moins 2 chiffres, une majuscule, une minuscule et ne doit pas contenir d'espace"
         )
       );
     }

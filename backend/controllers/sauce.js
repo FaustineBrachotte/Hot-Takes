@@ -27,6 +27,7 @@ exports.getOneSauce = (req, res) => {
 };
 
 exports.updateSauce = (req, res) => {
+    console.log(req.body);
     const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -36,12 +37,19 @@ exports.updateSauce = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
             if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message: "Non autorisé" });
+                res.status(401).json({ message: 'Non autorisé' });
             } else {
-                Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-                    .then(() => res.status(200).json({ message: "Objet modifié !" }))
-                    .catch(error => res.status(401).json({ error }));
-            }
+                if (req.file != null) {
+                    console.log(req.file.filename);
+                    console.log(sauce.imageUrl);
+                    const filename = sauce.imageUrl.split('/images/')[1];
+                    console.log(filename);
+                    fs.unlink(`images/${filename}`, (err => {
+                        if (err) console.log(err)}))}
+                        Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                            .then(() => res.status(200).json({ message: 'Objet modifié !' }))
+                            .catch(error => res.status(401).json({ error }));
+                    }
         })
         .catch((error) => {
             res.status(400).json({ error });
