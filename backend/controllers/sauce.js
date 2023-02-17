@@ -2,7 +2,6 @@ const Sauce = require('../models/sauce');
 const fs = require('fs');
 
 exports.addSauce = (req, res) => {
-    console.log(req.body);
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._userId;
     const sauce = new Sauce({
@@ -40,11 +39,13 @@ exports.updateSauce = (req, res) => {
                 if (req.file != null) {
                     const filename = sauce.imageUrl.split('/images/')[1];
                     fs.unlink(`images/${filename}`, (err => {
-                        if (err) console.log(err)}))}
-                        Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-                            .then(() => res.status(200).json({ message: 'Objet modifié !' }))
-                            .catch(error => res.status(401).json({ error }));
-                    }
+                        if (err) console.log(err)
+                    }))
+                }
+                Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Objet modifié !' }))
+                    .catch(error => res.status(401).json({ error }));
+            }
         })
         .catch((error) => {
             res.status(400).json({ error });
@@ -60,7 +61,7 @@ exports.deleteSauce = (req, res) => {
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Sauce.deleteOne({ _id: req.params.id })
-                        .then(() => { res.status(200).json({ message: "Objet supprimé !" }) })
+                        .then(() => res.status(200).json('Objet supprimé !'))
                         .catch(error => res.status(401).json({ error }));
                 });
             }
@@ -77,7 +78,6 @@ exports.getAllSauces = (req, res) => {
 };
 
 exports.likeSauce = (req, res) => {
-    console.log(req.body);
     if (req.body.like == 1) {
         Sauce.findOne({ _id: req.params.id })
             .then(sauce => {
