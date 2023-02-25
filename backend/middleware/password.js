@@ -3,11 +3,11 @@ const passwordValidator = require('password-validator');
 const passwordSchema = new passwordValidator();
 
 passwordSchema
-.is().min(8)                                    // Minimum length 8
-.is().max(20)                                  // Maximum length 20
-.has().uppercase()                              // Must have uppercase letters
-.has().lowercase()                              // Must have lowercase letters
-.has().digits(2)                                // Must have at least 2 digits
+.is().min(8)                            
+.is().max(20)                               
+.has().uppercase()                            
+.has().lowercase()                             
+.has().digits(2)                                
 .has().not().spaces()
  
 module.exports = (req, res, next) => {

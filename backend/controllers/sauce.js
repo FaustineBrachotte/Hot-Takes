@@ -35,7 +35,7 @@ exports.updateSauce = (req, res) => {
         Sauce.findOne({ _id: req.params.id })
             .then((sauce) => {
                 if (sauce.userId != req.auth.userId) {
-                    res.status(401).json({ message: 'Non autorisé' });
+                    res.status(403).json({ message: 'Non autorisé' });
                 } else {
                     if (req.file != null) {
                         const filename = sauce.imageUrl.split('/images/')[1];
@@ -45,11 +45,10 @@ exports.updateSauce = (req, res) => {
                     }
                     Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
                         .then(() => res.status(200).json({ message: 'Objet modifié !' }))
-                        .catch(error => res.status(401).json({ error }));
+                        .catch(error => res.status(400).json({ error }));
                 }
             })
-            .catch((error) => {
-                res.status(400).json({ error });
+            .catch((error) => { res.status(404).json({ error });
             })
     } else {
         res.status(400).json({ message: "La valeur de heat doit être comprise entre 1 et 10" })
@@ -60,18 +59,17 @@ exports.deleteSauce = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message: "Non autorisé" });
+                res.status(403).json({ message: "Non autorisé" });
             } else {
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Sauce.deleteOne({ _id: req.params.id })
                         .then(() => res.status(200).json('Objet supprimé !'))
-                        .catch(error => res.status(401).json({ error }));
+                        .catch(error => res.status(400).json({ error }));
                 });
             }
         })
-        .catch(error => {
-            res.status(500).json({ error });
+        .catch(error => { res.status(404).json({ error });
         });
 };
 
@@ -87,14 +85,14 @@ exports.likeSauce = (req, res) => {
             Sauce.findOne({ _id: req.params.id })
                 .then(sauce => {
                     if (sauce.usersLiked.includes(req.body.userId) || sauce.usersDisliked.includes(req.body.userId)) {
-                        res.status(401).json({ message: "Non autorisé" });
+                        res.status(403).json({ message: "Non autorisé" });
                     } else {
                         Sauce.updateOne({ _id: req.params.id }, { $push: { usersLiked: req.body.userId }, $inc: { likes: 1 } })
                             .then(() => res.status(200).json({ message: "Appréciation enregistrée !" }))
                             .catch((error) => res.status(400).json({ error }));
                     }
                 })
-                .catch((error) => res.status(405).json({ error }));
+                .catch((error) => res.status(404).json({ error }));
         } else if (req.body.like == 0) {
             Sauce.findOne({ _id: req.params.id })
                 .then(sauce => {
@@ -114,7 +112,7 @@ exports.likeSauce = (req, res) => {
             Sauce.findOne({ _id: req.params.id })
                 .then(sauce => {
                     if (sauce.usersLiked.includes(req.body.userId) || sauce.usersDisliked.includes(req.body.userId)) {
-                        res.status(401).json({ message: "Non autorisé" });
+                        res.status(403).json({ message: "Non autorisé" });
                     } else {
                         Sauce.updateOne({ _id: req.params.id }, { $push: { usersDisliked: req.body.userId }, $inc: { dislikes: 1 } })
                             .then(() => res.status(200).json({ message: "Appréciation enregistrée !" }))
