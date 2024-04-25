@@ -2,7 +2,9 @@
 
 ## 🎓 Projet OpenClassrooms #5
 
-L'objectif de ce projet est de développer lʼAPI pour lʼapplication web de critique de sauces piquantes Hot Takes. Les normes de sécurité doivent être respectées (authentification renforcée, mot de passe haché, adresse email unique, etc). La partie front-end est fournie, le back-end a été développé avec Node.js, Express.js et MongoDB.
+L'objectif de ce projet est de développer lʼAPI pour lʼapplication web de critique de sauces piquantes Hot Takes. Les normes de sécurité doivent être respectées (authentification renforcée, mot de passe haché, adresse email unique, etc). 
+
+La partie front-end est fournie, le back-end a été développé avec Node.js, Express.js et MongoDB.
 
 
 <br>
