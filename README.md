@@ -15,7 +15,7 @@ La partie front-end est fournie, le back-end a été développé avec Node.js, E
 - Stocker des données de manière sécurisée
 <br>
 
-## Installation de l'application
+## 🛠️ Installation de l'application
 
 1. Cloner le repository
 2. Lancer les commandes ci-dessous depuis le terminal
