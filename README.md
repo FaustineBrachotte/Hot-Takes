@@ -23,7 +23,7 @@ La partie front-end est fournie, le back-end a été développé avec Node.js, E
 
 **Front-end :**
 - $ cd frontend
-- $ npm install
+- $ npm install 
 - $ npm start
 
 **Back-end :**
